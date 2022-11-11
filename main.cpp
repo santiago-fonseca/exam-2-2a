@@ -11,11 +11,15 @@ int main()
     start1 = chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count();
     // ##### START OF SECTION 1 #####
     // create a vector of n threads
-    
+    vector<thread> vivi;
     // create n threads
-
+    for(int i = 0; i < nthreads; i++){
+        vivi.push_back( thread(single_sum_thread, i, nthreads, sum));
+    }
     // join the threads with the main thread
-    
+    for(int i = 0; i < nthreads; i++){
+        vivi.at(i).join();
+    }
     // ##### END OF SECTION 1 #####
     end1 = chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count();
 
@@ -24,10 +28,16 @@ int main()
     // parallelize the following code, reference main.h for the function prototype
     // comment out this block of code when you are done with the parallelization 
     // (only need sleep 1 in the thread function)
-    for (i = 0, pi = 0.0; i < nthreads; i++)
+    vector<thread> vivilia;
+
+    for (int i = 0;  i < nthreads; i++)
     {
-        pi += sum[i][0] * step;
-        sleep(1); // simulate a long running task
+        vivilia.push_back( thread(pi_sum_thread, i, &pi, sum));
+    }
+
+    //join remainingas threads from viviala (pi) thread vecror
+    for(int i = 0; i < nthreads; i++){
+        vivilia.at(i).join();
     }
 
     // ##### END OF SECTION 2 #####
